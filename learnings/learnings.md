@@ -7,3 +7,10 @@
     - Each service is responsible for a specific functionality and can be scaled independently.
     - Each service is developed and deployed independently.
 
+- What is minikube?
+    - minikube is a tool that allows you to run a single-node Kubernetes cluster on your local machine.
+    - It is a great way to get started with Kubernetes and to test your applications in a local environment.
+    - It is also a great way to learn about Kubernetes and to understand how it works.
+    - It is a great way to test your applications in a local environment before deploying them to a production environment.
+    - it is going to allow us to have a kubernetes cluster running on our local machine
+   

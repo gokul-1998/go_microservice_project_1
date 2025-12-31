@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment # other options are configmap(for storing config), service(for exposing app), ingress(for managing external access),secret(for storing sensitive data)
+metadata: #(helps to uniquely identify the object in the cluster)
+  name: auth
+  labels:
+    app: auth
+
+spec:
+  replicas: 2 # we want to run 2 pods for high availability
+  selector:
+    matchLabels:
+      app: auth
+    strategy:
+      type: RollingUpdate
+      rollingUpdate:
+        maxSurge: 3
+  template:
+    metadata:
+      labels:
+        app: auth
+    spec:
+      containers:
+        - name: auth
+          image: gokulkris/auth_service:latest
+          ports:
+            - containerPort: 5000
+          envFrom:
+            - configMapRef:
+                name: auth-configmap
+            - secretRef:
+                name: auth-secret

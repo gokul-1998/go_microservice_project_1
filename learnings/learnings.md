@@ -53,3 +53,18 @@
     - means both are same
 
 - ![alt text](image-2.png)
+
+- how do you optimize the docker image?
+    - use multi stage build
+    - use alpine as base image, because it is light weight and has less dependencies
+    - alphine here means alpine linux, it is a light weight linux distribution
+- alphine diff slim-bullseye
+    
+    
+    
+
+- pip freeze vs pip3 freeze?
+    - the difference is that pip is the default python package manager and pip3 is the python 3 package manager
+
+- how would you tag a docker image?
+    - `docker tag <image_name> <tag>`

@@ -1,4 +1,4 @@
-import os,gridfs,pika,json
+import os,gridfs,pika,json,logging,traceback,sys
 # gridfs is used to store large files in mongodb
 # pika is used to connect to rabbitmq
 from flask import Flask,request,Response
@@ -7,7 +7,27 @@ from auth import validate
 from auth_svc import access
 from storage import util
 
+# Configure logging to stdout with detailed formatting
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
+    stream=sys.stdout
+)
+logger = logging.getLogger(__name__)
+
 server = Flask(__name__)
+server.logger.setLevel(logging.DEBUG)
+
+# Global error handler - logs full stack trace for any unhandled exception
+@server.errorhandler(Exception)
+def handle_exception(e):
+    logger.error(f"Unhandled exception: {e}\n{traceback.format_exc()}")
+    return "Internal Server Error", 500
+
+# Log all incoming requests
+@server.before_request
+def log_request():
+    logger.info(f"Request: {request.method} {request.path} from {request.remote_addr}")
 server.config["MONGO_URI"] = os.getenv("MONGO_URI","mongodb://host.minikube.internal:27017/videos")
 
 mongo = PyMongo(server)

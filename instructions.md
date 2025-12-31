@@ -47,3 +47,34 @@ kubectl scale deployment gateway --replicas=0
 - `kubectl describe pvc`
 
 - `kubectl delete -f ./` to delete all the manifests
+
+- to check logs of a container
+    `kubectl logs -f converter-7996656bf8-kr2q2`
+    - `kubectl describe pod converter-7996656bf8-kr2q2 | tail -30`
+    - `kubectl logs converter-7996656bf8-hjwkl`
+    - `kubectl get pods -l app=converter`
+
+```bash
+# Build the image
+cd /home/gokul/gokul_repos/go_microservice_project_1/system_design/pythonn/src/converter
+docker build -t gokulkris/converter:latest .
+
+# Push to Docker Hub
+docker push gokulkris/converter:latest
+
+# Restart the deployment to pull the new image
+kubectl rollout restart deployment converter
+```
+
+- `curl -X POST http://mp3converter.com/login -u gokul@gmail.com:gokul123`
+
+```bash
+# Stream logs from one pod (follow mode)
+kubectl logs -f gateway-6d8c55d7cb-8smnv
+
+# Or stream logs from ALL gateway pods at once
+kubectl logs -f -l app=gateway
+
+# Or just get recent logs (last 50 lines)
+kubectl logs -l app=gateway --tail=50
+```
